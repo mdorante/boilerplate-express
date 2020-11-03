@@ -61,9 +61,8 @@ app.get("/:word/echo", (req, res) => res.json({ echo: req.params.word }));
 app
   .route("/name")
   .get((req, res) => res.json({ name: `${req.query.first} ${req.query.last}` }))
+  /** 12) Get data form POST  */
   .post((req, res) => res.json({ name: `${req.body.first} ${req.body.last}` }));
-
-/** 12) Get data form POST  */
 
 // This would be part of the basic setup of an Express app
 // but to allow FCC to run tests, the server is already active
