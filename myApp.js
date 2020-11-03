@@ -3,6 +3,12 @@ const express = require("express");
 const app = express();
 
 // --> 7)  Mount the Logger middleware here
+/** 7) Root-level Middleware - A logger */
+//  place it before all the routes !
+app.use(function (req, res, next) {
+  console.log(`${req.method} ${req.path} - ${req.ip}`);
+  next();
+});
 
 // --> 11)  Mount the body-parser middleware  here
 
@@ -13,13 +19,6 @@ console.log("Hello World");
 // app.get("/", function (req, res) {
 //   res.send("Hello Express");
 // });
-
-/** 7) Root-level Middleware - A logger */
-//  place it before all the routes !
-app.use(function (req, res, next) {
-  console.log(`${req.method} ${req.path} - ${req.ip}`);
-  next();
-});
 
 /** 3) Serve an HTML file */
 app.get("/", function (req, res) {
@@ -45,6 +44,16 @@ app.get("/json", function (req, res) {
 });
 
 /** 8) Chaining middleware. A Time server */
+app.get(
+  "/now",
+  function (req, res, next) {
+    req.time = new Date().toString();
+    next();
+  },
+  function (req, res) {
+    res.json({ time: req.time });
+  }
+);
 
 /** 9)  Get input from client - Route parameters */
 
